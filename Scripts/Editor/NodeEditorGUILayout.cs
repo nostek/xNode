@@ -35,6 +35,7 @@ namespace XNodeEditor {
             if (port == null) EditorGUILayout.PropertyField(property, label, includeChildren, GUILayout.MinWidth(30));
             else {
                 Rect rect = new Rect();
+                string portIcon = null;
 
                 // If property is an input, display a regular property field and put a port handle on the left side
                 if (port.direction == XNode.NodePort.IO.Input) {
@@ -45,6 +46,7 @@ namespace XNodeEditor {
                     if (NodeEditorUtilities.GetAttrib(port.node.GetType(), property.name, out inputAttribute)) {
                         instancePortList = inputAttribute.instancePortList;
                         showBacking = inputAttribute.backingValue;
+                        portIcon = inputAttribute.portIcon;
                     }
 
                     if (instancePortList) {
@@ -82,6 +84,7 @@ namespace XNodeEditor {
                     if (NodeEditorUtilities.GetAttrib(port.node.GetType(), property.name, out outputAttribute)) {
                         instancePortList = outputAttribute.instancePortList;
                         showBacking = outputAttribute.backingValue;
+                        portIcon = outputAttribute.portIcon;
                     }
 
                     if (instancePortList) {
@@ -114,11 +117,15 @@ namespace XNodeEditor {
 
                 rect.size = new Vector2(16, 16);
 
+                Texture2D portTexture = null;
+                if (portIcon != null) portTexture = Resources.Load<Texture2D>(portIcon);
+
                 Color backgroundColor = new Color32(90, 97, 105, 255);
                 Color tint;
                 if (NodeEditorWindow.nodeTint.TryGetValue(port.node.GetType(), out tint)) backgroundColor *= tint;
                 Color col = NodeEditorWindow.current.graphEditor.GetTypeColor(port.ValueType);
-                DrawPortHandle(rect, backgroundColor, col);
+                if (portTexture != null) DrawPortHandle(rect, portTexture, col);
+                else DrawPortHandle(rect, backgroundColor, col);
 
                 // Register the handle position
                 Vector2 portPos = rect.center;
@@ -218,6 +225,14 @@ namespace XNodeEditor {
             GUI.DrawTexture(rect, NodeEditorResources.dotOuter);
             GUI.color = typeColor;
             GUI.DrawTexture(rect, NodeEditorResources.dot);
+            GUI.color = col;
+        }
+
+        public static void DrawPortHandle(Rect rect, Texture2D typeTexture, Color typeColor) {
+            if(typeTexture == null) return;
+            Color col = GUI.color;
+            GUI.color = typeColor;
+            GUI.DrawTexture(rect, typeTexture);
             GUI.color = col;
         }
 

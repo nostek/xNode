@@ -213,13 +213,16 @@ namespace XNode {
             public ShowBackingValue backingValue;
             public ConnectionType connectionType;
             public bool instancePortList;
+            public string portIcon;
 
             /// <summary> Mark a serializable field as an input port. You can access this through <see cref="GetInputPort(string)"/> </summary>
             /// <param name="backingValue">Should we display the backing value for this port as an editor field? </param>
             /// <param name="connectionType">Should we allow multiple connections? </param>
-            public InputAttribute(ShowBackingValue backingValue = ShowBackingValue.Unconnected, ConnectionType connectionType = ConnectionType.Multiple, bool instancePortList = false) {
+            public InputAttribute(ShowBackingValue backingValue = ShowBackingValue.Unconnected, ConnectionType connectionType = ConnectionType.Multiple, bool instancePortList = false, string portIcon = null) {
                 this.backingValue = backingValue;
                 this.connectionType = connectionType;
+                this.instancePortList = instancePortList;
+                this.portIcon = portIcon;
             }
         }
 
@@ -229,13 +232,16 @@ namespace XNode {
             public ShowBackingValue backingValue;
             public ConnectionType connectionType;
             public bool instancePortList;
+            public string portIcon;
 
             /// <summary> Mark a serializable field as an output port. You can access this through <see cref="GetOutputPort(string)"/> </summary>
             /// <param name="backingValue">Should we display the backing value for this port as an editor field? </param>
             /// <param name="connectionType">Should we allow multiple connections? </param>
-            public OutputAttribute(ShowBackingValue backingValue = ShowBackingValue.Never, ConnectionType connectionType = ConnectionType.Multiple, bool instancePortList = false) {
+            public OutputAttribute(ShowBackingValue backingValue = ShowBackingValue.Never, ConnectionType connectionType = ConnectionType.Multiple, bool instancePortList = false, string portIcon = null) {
                 this.backingValue = backingValue;
                 this.connectionType = connectionType;
+                this.instancePortList = instancePortList;
+                this.portIcon = portIcon;
             }
         }
 

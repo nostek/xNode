@@ -117,6 +117,7 @@ namespace XNodeEditor {
 
                 rect.size = new Vector2(16, 16);
 
+                //Profiled with Unity Profiler and StopWatch, Unity keeps a cached version of the texture in memory.
                 Texture2D portTexture = null;
                 if (portIcon != null) portTexture = Resources.Load<Texture2D>(portIcon);
 
